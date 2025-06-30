@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Application.IUseCase;
 using Application.UseCase.Orders.Buyer.Commands;
+using Application.UseCase.Orders.Buyer.Queries;
 using Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -24,8 +25,7 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
             if (userIdClaim == null)
                 return Unauthorized("No se encontró el ID de usuario en el token.");
             int userId = int.Parse(userIdClaim.Value);
-            await _mediator.Send(new RegisterOrderCommand(registerOrderRequestDto , userId ));
-            var registro = await order.RegisterOrder(registerOrderRequestDto , userId);
+            var registro = await _mediator.Send(new RegisterOrderCommand(registerOrderRequestDto , userId ));;
             return Ok (new { Idpedido = registro });
             
         }
@@ -64,7 +64,7 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
     {
         try
         {
-            var registro = await order.VerSiOrderAceptado(idPedido);
+            var registro = await _mediator.Send(new CheckOrderAcceptedQuery (idPedido));
             return Ok (new { Idpedido = registro });
             
         }
@@ -122,7 +122,7 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
 
             int userId = int.Parse(userIdClaim.Value);
 
-            var registro = await order.MostrarOrder(userId);
+            var registro =  await _mediator.Send(new GetBuyerOrdersQuery(userId));
             return Ok (registro);
             
         }
@@ -145,7 +145,7 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
 
             int userId = int.Parse(userIdClaim.Value);
 
-            var registro = await order.ListaMostrarPedidosPreparados(userId);
+            var registro = await _mediator.Send(new GetPreparedOrdersListQuery(userId));
             return Ok (registro );
             
         }
@@ -168,7 +168,7 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
 
             int userId = int.Parse(userIdClaim.Value);
 
-            var registro = await order.MostrarPedidosPreparados(userId , idPedido);
+            var registro = await _mediator.Send(new GetPreparedOrderDetailQuery(userId, idPedido));
             return Ok (registro );
             
         }
