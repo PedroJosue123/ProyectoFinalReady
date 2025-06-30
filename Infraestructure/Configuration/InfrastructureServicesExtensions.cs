@@ -25,6 +25,8 @@ public static class InfrastructureServicesExtensions
         services.AddScoped<IOrderSellerRepository<Pedido>, OrderSellerRepository>();
         services.AddScoped<IOrderBuyerRepository<Pedido>, OrderBuyerRepository>();
         services.AddScoped<IPaymentOrderRepository <Userprofile, Pedido>, PaymentOrderRepository>();
+        
+        services.AddScoped<ISendOrderRepository<Preparacion>, SendOrderRepository>();
 
         services.AddScoped<IAuthService, AuthService >();
         services.AddScoped<IPaymentServer, PaymentServer >();
