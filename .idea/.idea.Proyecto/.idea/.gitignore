@@ -1,13 +1,42 @@
-﻿# Default ignored files
-/shelf/
-/workspace.xml
-# Rider ignored files
-/modules.xml
-/contentModel.xml
-/.idea.Proyecto.iml
-/projectSettingsUpdater.xml
-# Editor-based HTTP Client requests
-/httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
+﻿# Rider / JetBrains IDE
+.idea/
+*.sln.iml
+
+# Archivos de compilación .NET
+**/[Bb]in/
+**/[Oo]bj/
+
+# Archivos generados por NuGet
+# La mayoría de estos ya están dentro de obj/, pero ser explícito no daña
+*.nuget.props
+*.nuget.targets
+*.nuget.cache
+*.dgspec.json
+*.g.props
+*.g.targets
+*.assets.cache
+*.packagespec.json
+project.assets.json
+project.lock.json
+
+# Archivos generados por MSBuild
+*.AssemblyInfo.cs
+*.AssemblyReference.cache
+*.GeneratedMSBuildEditorConfig.editorconfig
+
+# Archivos temporales de Rider
+*.model.nuget.info
+*.restore.info
+
+# Otros archivos generados por .NET
+*.csproj.user
+*.user
+*.suo
+*.vs/
+
+# Logs
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
