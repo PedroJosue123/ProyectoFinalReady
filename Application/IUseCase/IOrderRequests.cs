@@ -1,3 +1,5 @@
+using Domain.Entities;
+
 namespace Application.IUseCase;
 
 public interface IOrderRequests
