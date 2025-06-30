@@ -7,3 +7,7 @@ public interface IOrderSellerRepository <Pedido>
     Task<List<Pedido>> GetPendingOrdersAsync(int sellerId, CancellationToken cancellationToken);
     Task<Pedido?> GetPedidoWithPagoAsync(int pedidoId, CancellationToken cancellationToken);
 }
+
+
+
+
