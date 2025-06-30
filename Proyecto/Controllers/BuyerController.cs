@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Application.IUseCase;
 using Application.UseCase.Orders.Buyer.Commands;
 using Application.UseCase.Orders.Buyer.Queries;
 using Application.UseCase.PaymenttOrder.Buyer.Commands;

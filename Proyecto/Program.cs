@@ -1,4 +1,3 @@
-using Application.IUseCase;
 using Application.UseCase;
 using Proyecto.Configuration;
 
@@ -8,10 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationServices(builder.Configuration);
 
-builder.Services.AddScoped<IOrder, Order>();
-builder.Services.AddScoped<IOrderRequests, OrderRequests>();
-builder.Services.AddScoped<IPaymentOrder, PaymentOrder>();
-builder.Services.AddScoped<ISendOrder, SendOrder>();
+
 
 
 var app = builder.Build();

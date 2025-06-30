@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Application.IUseCase;
 using Application.UseCase.Orders.Seller.Commands;
 using Application.UseCase.Orders.Seller.Queries;
 using Application.UseCase.SenddOrder.Seller.Commands;

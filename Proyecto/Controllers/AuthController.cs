@@ -1,7 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Application.IUseCase;
 using Application.UseCase.Users.Commands;
 using Domain.Dtos;
 using Domain.Interface;
