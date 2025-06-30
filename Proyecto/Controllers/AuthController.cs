@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Application.ICaseUse;
+using Application.IUseCase;
 using Domain.Dtos;
 using Domain.Interface;
 using Microsoft.AspNetCore.Authorization;

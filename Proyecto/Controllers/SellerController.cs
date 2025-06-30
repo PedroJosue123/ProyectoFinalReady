@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Application.ICaseUse;
+using Application.IUseCase;
 using Domain.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
