@@ -1,8 +1,8 @@
-using System.Diagnostics;
+/*using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Proyecto.Models;
+using TransActiva.Models;
 
-namespace Proyecto.Controllers;
+namespace TransActiva.Controllers;
 
 public class HomeController : Controller
 {
@@ -28,4 +28,4 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-}
+}*/
