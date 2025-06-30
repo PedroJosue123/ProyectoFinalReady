@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Proyecto.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-public class SellerController (IMediator _mediator , IOrderRequests orderRequests,IOrder order, ISendOrder sendOrder): ControllerBase
+public class SellerController (IMediator _mediator ): ControllerBase
 {
    
     

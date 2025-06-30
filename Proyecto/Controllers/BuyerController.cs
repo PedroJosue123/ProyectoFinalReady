@@ -15,7 +15,7 @@ namespace Proyecto.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder paymentOrder, ISendOrder sendOrder) : ControllerBase
+public class BuyerController (IMediator _mediator) : ControllerBase
 {
    
     [Authorize(Roles = "Comprador")]
