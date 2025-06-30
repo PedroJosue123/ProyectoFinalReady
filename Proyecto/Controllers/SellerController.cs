@@ -18,7 +18,7 @@ public class SellerController (IMediator _mediator , IOrderRequests orderRequest
     [Authorize(Roles = "Vendedor")]
     [HttpGet("ObtenerSolicitudes/")]
    
-    public async Task<IActionResult> GetSolicitud()
+    public async Task<IActionResult> GetSolicitud(CancellationToken cancellationToken)
     {
         try
         {
@@ -27,7 +27,7 @@ public class SellerController (IMediator _mediator , IOrderRequests orderRequest
                 return Unauthorized("No se encontró el ID de usuario en el token.");
 
             int userId = int.Parse(userIdClaim.Value);
-            var registro = await orderRequests.GetSolicitud(userId);
+            var registro = await _mediator.Send(new GetPendingOrdersQuery(userId), cancellationToken );;
             return Ok ( registro );
             
         }
@@ -41,11 +41,11 @@ public class SellerController (IMediator _mediator , IOrderRequests orderRequest
     [Authorize(Roles = "Vendedor")]
     
     [HttpPut("AceptarSolicitud/{idPedido}")]
-    public async Task<IActionResult> ActivarSolicitud(int idPedido)
+    public async Task<IActionResult> ActivarSolicitud(int idPedido, CancellationToken cancellationToken)
     {
         try
         {
-            var registro = await orderRequests.AceptarSolicitud(idPedido);
+            var registro = await _mediator.Send(new AcceptOrderRequestCommand(idPedido), cancellationToken );
             return Ok ( registro );
             
         }
@@ -59,11 +59,12 @@ public class SellerController (IMediator _mediator , IOrderRequests orderRequest
     [Authorize(Roles = "Vendedor")]
     
     [HttpGet("Confirmarsipago/{idPedido}")]
-    public async Task<IActionResult> Versiapagado(int idPedido)
+    public async Task<IActionResult> Versiapagado(int idPedido, CancellationToken cancellationToken)
     {
         try
         {
-            var registro = await orderRequests.VerSiPago(idPedido);
+            
+            var registro = await _mediator.Send(new CheckIfOrderIsPaidQuery(idPedido), cancellationToken );
             return Ok (  new { Idproducto = registro });
             
         }
