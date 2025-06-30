@@ -4,7 +4,7 @@ using Domain.Interface;
 using Infraestructure.Models;
 using MediatR;
 
-namespace Application.UseCase.PaymenttOrder.Seller;
+namespace Application.UseCase.PaymenttOrder.Buyer.Queries;
 
 public record GetPaymentDataQuery(int OrderId) : IRequest<PaymentGetRequestDomain>;
 

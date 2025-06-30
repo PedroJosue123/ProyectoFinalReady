@@ -2,6 +2,8 @@
 using Application.IUseCase;
 using Application.UseCase.Orders.Buyer.Commands;
 using Application.UseCase.Orders.Buyer.Queries;
+using Application.UseCase.PaymenttOrder.Buyer.Commands;
+using Application.UseCase.PaymenttOrder.Buyer.Queries;
 using Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -45,9 +47,9 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
                 return Unauthorized("No se encontró el ID de usuario en el token.");
-
             int userId = int.Parse(userIdClaim.Value);
-            var registro = await paymentOrder.VerificationPaymentPassword(userId, paymentPasswordDto.PaymentPassword);
+            var registro = await _mediator.Send(new VerifyPaymentPasswordCommand(userId, paymentPasswordDto.PaymentPassword));
+
             return Ok (registro);
             
         }
@@ -81,7 +83,8 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
     {
         try
         {
-            var registro = await paymentOrder.GeyDataPayment(idPedido);
+          
+            var registro =  await _mediator.Send(new GetPaymentDataQuery (idPedido));
             return Ok ( registro );
             
         }
@@ -94,11 +97,12 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
     
     [Authorize(Roles = "Comprador")]
     [HttpPost("Pagar")]
-    public async Task<IActionResult> Payment(int id, [FromBody] PaymentCartDto paymentCartDto)
+    public async Task<IActionResult> Payment(int OrderId, [FromBody] PaymentCartDto paymentCartDto)
     {
         try
         {
-            var registro = await paymentOrder.Payment(id, paymentCartDto);
+           
+            var registro = await _mediator.Send(new ProcessPaymentCommand(OrderId, paymentCartDto));
             return Ok (registro);
             
         }
