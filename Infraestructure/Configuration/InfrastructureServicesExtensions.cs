@@ -1,5 +1,7 @@
 ﻿using Domain.Interface;
 using Infraestructure.Context;
+using Infraestructure.Models;
+using Infraestructure.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,9 +21,9 @@ public static class InfrastructureServicesExtensions
             )
         );
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserRepository<User>, UserRepository>();
         services.AddScoped<IAuthService, AuthService >();
         services.AddScoped<IPaymentServer, PaymentServer >();
-
         /*
         // Services Register
         services.AddTransient<IUnitOfWork, UnitOfWork>();

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Application.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 /*
 using Infraestructure.Configuration;
@@ -43,6 +44,7 @@ public static class ServiceRegistrationExtensions
             });
         });
         services.AddInfrastructureServices(configuration);
+        services.AddApplicationServicesextencions();
         
         // Configuración de autenticación JWT
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

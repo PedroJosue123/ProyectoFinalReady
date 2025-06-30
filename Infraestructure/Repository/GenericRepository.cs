@@ -15,7 +15,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         return _context.AsQueryable();
     }
-
+    public IQueryable<T> GetAllAsNoTracking()
+    {
+        return _context.AsNoTracking(); // evita el seguimiento innecesario
+    }
     public async Task AddAsync(T entity)
     {
         await _context.AddAsync(entity);

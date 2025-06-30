@@ -2,8 +2,10 @@
 using System.Security.Claims;
 using System.Text;
 using Application.IUseCase;
+using Application.UseCase.Users.Commands;
 using Domain.Dtos;
 using Domain.Interface;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -16,19 +18,21 @@ public class AuthController : ControllerBase
 {
     private readonly ILoginUser _loginUser;
     private readonly IRegisterUser _registerUser;
+    private readonly IMediator _mediator;
 
-    public AuthController(ILoginUser loginUser, IRegisterUser registerUser)
+   
+    public AuthController(IMediator mediator, IRegisterUser registerUser)
     {
-        _loginUser = loginUser;
+        _mediator = mediator;
         _registerUser = registerUser;
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginRequestDto dto)
+    public async Task<IActionResult> Login(LoginRequestDto dto, CancellationToken cancellationToken)
     {
         try
         {
-            var token = await _loginUser.Execute(dto);
+            var token =  await _mediator.Send(new LoginUserCommand(dto), cancellationToken);
             return Ok(new { token });
         }
         catch (Exception ex)
@@ -38,11 +42,11 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterRequestDto dto)
+    public async Task<IActionResult> Register(RegisterRequestDto dto , CancellationToken cancellationToken)
     {
         try
         {
-            var result = await _registerUser.Execute(dto);
+            var result = await _mediator.Send(new RegisterUserCommand(dto), cancellationToken);
             return Ok(new { registered = result });
         }
         catch (Exception ex)
