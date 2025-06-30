@@ -1,5 +1,5 @@
 ﻿using System.Text;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 /*
 using Infraestructure.Configuration;
 */
@@ -25,6 +25,7 @@ public static class ServiceRegistrationExtensions
                 Name = "Authorization",
                 Type = SecuritySchemeType.ApiKey
             });
+        
             // Requiere el esquema de seguridad en cada petición
             options.AddSecurityRequirement(new OpenApiSecurityRequirement
             {
@@ -42,6 +43,7 @@ public static class ServiceRegistrationExtensions
             });
         });
         services.AddInfrastructureServices(configuration);
+        
         // Configuración de autenticación JWT
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
@@ -56,6 +58,7 @@ public static class ServiceRegistrationExtensions
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super-secreta-1234567890-firma-segura!"))
                 };
             });
+
         // Configuración de autorización basada en roles
         services.AddAuthorization(options =>
         {
@@ -63,6 +66,10 @@ public static class ServiceRegistrationExtensions
             options.AddPolicy(name: "Comprador", policy => policy.RequireRole("Comprador"));
             options.AddPolicy(name: "Vendor", policy => policy.RequireRole("Vendor"));
         });
+
+        
+        
+
         return services;
     }
 }
