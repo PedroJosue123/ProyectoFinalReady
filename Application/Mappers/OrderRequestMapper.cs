@@ -1,4 +1,7 @@
-﻿namespace Application.Mappers;
+﻿using Domain.Entities;
+using Infraestructure.Models;
+
+namespace Application.Mappers;
 
 public class OrderRequestMapper
 {
