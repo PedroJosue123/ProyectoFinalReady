@@ -22,6 +22,9 @@ public static class InfrastructureServicesExtensions
         );
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository<User>, UserRepository>();
+        services.AddScoped<IOrderSellerRepository<Pedido>, OrderSellerRepository>();
+        services.AddScoped<IOrderBuyerRepository<Pedido>, OrderBuyerRepository>();
+
         services.AddScoped<IAuthService, AuthService >();
         services.AddScoped<IPaymentServer, PaymentServer >();
         /*
