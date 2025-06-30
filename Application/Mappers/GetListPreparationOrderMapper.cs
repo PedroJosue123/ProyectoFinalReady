@@ -7,32 +7,33 @@ public class GetListPreparationOrderMapper
 {
     public static GetListPreparationOrderDomain ToDomain(Pedido entity)
     {
+        var envio = entity.IdPedidosProductosNavigation.IdPreparacionNavigation?.IdEnvioNavigation;
 
-        // Extraer los estados 
+        // Manejo de estados con null-checks
+        bool estadoEnviado = envio?.Estado ?? false;
+        bool estadoEntregado = envio?.Llegada ?? false;
 
-        bool estadoEnviado = (bool)entity.IdPedidosProductosNavigation.IdPreparacionNavigation.IdEnvioNavigation.Estado;
-        bool estadoEntregado =
-            (bool)entity.IdPedidosProductosNavigation.IdPreparacionNavigation.IdEnvioNavigation.Llegada;
-
-        // Lógica del estado
+        // Determinar el estado del pedido
         string estadoString;
-
         if (estadoEnviado && estadoEntregado)
         {
-            estadoString = "Producto Enviado y entegrado";
+            estadoString = "Producto enviado y entregado";
         }
-        else if (!estadoEntregado && estadoEnviado)
+        else if (estadoEnviado)
         {
-
-            estadoString = "Pedido enviado ";
+            estadoString = "Pedido enviado";
         }
         else
         {
-            estadoString = "No se ah preparado";
+            estadoString = "Preparado, pendiente de envío";
         }
 
-        return new GetListPreparationOrderDomain(entity.IdPedido,estadoString, entity.IdPedidosProductosNavigation.NombreTransaccion);
-
+        return new GetListPreparationOrderDomain(
+            entity.IdPedido,
+            estadoString,
+            entity.IdPedidosProductosNavigation.NombreTransaccion
+        );
     }
+
 
 }
