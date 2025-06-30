@@ -20,26 +20,16 @@ public class PaymentOrderRepository(TransactivaDbContext context) : IPaymentOrde
             .FirstOrDefaultAsync(cancellationToken);
     }
 
+  
     public async Task<Pedido?> GetPedidoWithPaymentAsync(int orderId, CancellationToken cancellationToken)
     {
         return await context.Pedidos
             .Where(p => p.IdPedido == orderId && p.Estado == true)
-            .Select(p => new Pedido
-            {
-                IdPedido = p.IdPedido,
-                Estado = p.Estado,
-                IdPedidosProductosNavigation = new Pedidosproducto
-                {
-                    IdPagoNavigation = new Pago
-                    {
-                        Estado = p.IdPedidosProductosNavigation.IdPagoNavigation.Estado,
-                        FechaPago = p.IdPedidosProductosNavigation.IdPagoNavigation.FechaPago
-                    }
-                }
-            })
+            .Include(p => p.IdPedidosProductosNavigation)
+            .ThenInclude(pp => pp.IdPagoNavigation)
             .FirstOrDefaultAsync(cancellationToken);
     }
-    
+
     
     public async Task<Pedido?> GetPedidoDataForPaymentAsync(int idPedido, CancellationToken cancellationToken)
     {
