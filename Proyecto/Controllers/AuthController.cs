@@ -16,15 +16,14 @@ namespace Proyecto.Controllers;
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    private readonly ILoginUser _loginUser;
-    private readonly IRegisterUser _registerUser;
+   
     private readonly IMediator _mediator;
 
    
-    public AuthController(IMediator mediator, IRegisterUser registerUser)
+    public AuthController(IMediator mediator)
     {
         _mediator = mediator;
-        _registerUser = registerUser;
+   
     }
 
     [HttpPost("login")]

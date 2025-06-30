@@ -7,8 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddScoped<ILoginUser, LoginUser>();
-builder.Services.AddScoped<IRegisterUser, RegisterUser>();
+
 builder.Services.AddScoped<IOrder, Order>();
 builder.Services.AddScoped<IOrderRequests, OrderRequests>();
 builder.Services.AddScoped<IPaymentOrder, PaymentOrder>();

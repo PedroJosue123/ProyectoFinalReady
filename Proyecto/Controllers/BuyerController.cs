@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using Application.IUseCase;
+using Application.UseCase.Orders.Buyer.Commands;
 using Domain.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +11,7 @@ namespace Proyecto.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BuyerController (IOrder order, IPaymentOrder paymentOrder, ISendOrder sendOrder) : ControllerBase
+public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder paymentOrder, ISendOrder sendOrder) : ControllerBase
 {
    
     [Authorize(Roles = "Comprador")]
@@ -21,8 +23,8 @@ public class BuyerController (IOrder order, IPaymentOrder paymentOrder, ISendOrd
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
                 return Unauthorized("No se encontró el ID de usuario en el token.");
-
             int userId = int.Parse(userIdClaim.Value);
+            await _mediator.Send(new RegisterOrderCommand(registerOrderRequestDto , userId ));
             var registro = await order.RegisterOrder(registerOrderRequestDto , userId);
             return Ok (new { Idpedido = registro });
             
