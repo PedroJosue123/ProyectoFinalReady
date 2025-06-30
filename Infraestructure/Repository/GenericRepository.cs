@@ -1,4 +1,5 @@
-﻿using Infraestructure.Context;
+﻿using Domain.Interface;
+using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 namespace Infraestructure.Repository;
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Domain.Interface;
 using Infraestructure.Context;
 using Infraestructure.Repository;
 using Microsoft.EntityFrameworkCore.Storage;
