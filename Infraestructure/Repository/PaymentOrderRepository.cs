@@ -1,0 +1,42 @@
+using Domain.Interface;
+using Infraestructure.Context;
+using Infraestructure.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace Infraestructure.Repository;
+
+
+public class PaymentOrderRepository(TransactivaDbContext context) : IPaymentOrderRepository <Userprofile, Pedido>
+{
+    public async Task<Userprofile?> GetUserProfileWithPasswordAsync(int userId, CancellationToken cancellationToken)
+    {
+        return await context.Userprofiles
+            .Where(p => p.UserId == userId)
+            .Select(p => new Userprofile
+            {
+                UserId = p.UserId,
+                PaymentPassword = p.PaymentPassword
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<Pedido?> GetPedidoWithPaymentAsync(int orderId, CancellationToken cancellationToken)
+    {
+        return await context.Pedidos
+            .Where(p => p.IdPedido == orderId && p.Estado == true)
+            .Select(p => new Pedido
+            {
+                IdPedido = p.IdPedido,
+                Estado = p.Estado,
+                IdPedidosProductosNavigation = new Pedidosproducto
+                {
+                    IdPagoNavigation = new Pago
+                    {
+                        Estado = p.IdPedidosProductosNavigation.IdPagoNavigation.Estado,
+                        FechaPago = p.IdPedidosProductosNavigation.IdPagoNavigation.FechaPago
+                    }
+                }
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+}
