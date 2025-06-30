@@ -1,6 +1,9 @@
 ﻿using System.Security.Claims;
 using Application.IUseCase;
+using Application.UseCase.Orders.Seller.Commands;
+using Application.UseCase.Orders.Seller.Queries;
 using Domain.Dtos;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Proyecto.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-public class SellerController (IOrderRequests orderRequests,IOrder order, ISendOrder sendOrder): ControllerBase
+public class SellerController (IMediator _mediator , IOrderRequests orderRequests,IOrder order, ISendOrder sendOrder): ControllerBase
 {
    
     
@@ -83,7 +86,10 @@ public class SellerController (IOrderRequests orderRequests,IOrder order, ISendO
                 return Unauthorized("No se encontró el ID de usuario en el token.");
 
             int userId = int.Parse(userIdClaim.Value);
-            var registro = await order.ListGetPreparationOrder(userId);
+            
+
+            var registro = await _mediator.Send(new GetSellerPreparedOrdersListQuery(userId) );
+
             return Ok ( registro );
             
         }
@@ -100,8 +106,8 @@ public class SellerController (IOrderRequests orderRequests,IOrder order, ISendO
         try
         {
             
-          
-            var registro = await order.GetProveedorPreparationOrder(idproducto);
+            var registro = await _mediator.Send(new GetPreparationPreviewQuery(idproducto) );
+
             return Ok ( registro );
             
         }
@@ -120,7 +126,8 @@ public class SellerController (IOrderRequests orderRequests,IOrder order, ISendO
     {
         try
         {
-            var registro = await order.PreparetedOrder(idProducto, preparationOrderDto );
+           
+            var registro = await _mediator.Send(new PrepareOrderCommand(idProducto, preparationOrderDto) );
             return Ok (  new { IdPreparacion = registro } );
             
         }
