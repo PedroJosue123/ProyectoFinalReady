@@ -1,0 +1,61 @@
+bin/
+obj/
+*.exe
+*.dll
+*.pdb
+*.app
+*.msi
+*.nupkg
+*.log
+*.cache
+*.dbmdl
+*.bak
+*.sql
+*.sqlite
+*.mdf
+*.ldf
+
+# --- Configuraciones específicas del usuario y herramientas ---
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.userprefs
+*.sln.docstates
+*.sln.iml
+*.DotSettings.user
+
+# --- Resultados de pruebas y cobertura ---
+TestResults/
+*.coverage
+*.coveragexml
+coverage/
+
+# --- Configuración de desarrollo y secretos ---
+*.env
+appsettings.Development.json
+appsettings.*.local.json
+secrets.json
+
+# --- Publicaciones y artefactos ---
+publish/
+artifacts/
+
+# --- VS Code y JetBrains Rider ---
+.vscode/
+.idea/
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+.idea/**/shelf/
+
+# --- Node.js (por si usas algo frontend en el proyecto) ---
+node_modules/
+
+# --- Scaffolding de ASP.NET ---
+ScaffoldingReadMe.txt
+
+# --- Otros ---
+_ReSharper*/
+*.template.config/
