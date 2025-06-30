@@ -29,4 +29,25 @@ public class OrderSellerRepository (TransactivaDbContext context) : IOrderSeller
             .AsNoTracking()
             .FirstOrDefaultAsync(cancellationToken);
     }
+    
+    public async Task<List<Pedido>> GetPendingOrdersAsync(int sellerId, CancellationToken cancellationToken)
+    {
+        return await context.Pedidos
+            .Where(p => p.IdProveedor == sellerId && p.Estado == false)
+            .Include(p => p.IdPedidosProductosNavigation)
+            .ThenInclude(pp => pp.IdPagoNavigation)
+            .Include(p => p.IdCompradorNavigation)
+            .ThenInclude(c => c.Userprofile)
+            .AsNoTracking()
+            .ToListAsync(cancellationToken);
+    }
+
+    public async Task<Pedido?> GetPedidoWithPagoAsync(int pedidoId, CancellationToken cancellationToken)
+    {
+        return await context.Pedidos
+            .Include(p => p.IdPedidosProductosNavigation)
+            .ThenInclude(pp => pp.IdPagoNavigation)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.IdPedido == pedidoId, cancellationToken);
+    }
 }
