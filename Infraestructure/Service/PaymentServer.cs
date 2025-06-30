@@ -1,4 +1,6 @@
-﻿public class PaymentServer : IPaymentServer
+﻿using Domain.Interface;
+
+public class PaymentServer : IPaymentServer
 {
     public bool paymentt(string NroCard, string FechaNacimiento, string cvv)
     {
