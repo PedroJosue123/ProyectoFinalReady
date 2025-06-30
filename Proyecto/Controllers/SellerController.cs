@@ -2,6 +2,7 @@
 using Application.IUseCase;
 using Application.UseCase.Orders.Seller.Commands;
 using Application.UseCase.Orders.Seller.Queries;
+using Application.UseCase.SenddOrder.Seller.Commands;
 using Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -142,11 +143,13 @@ public class SellerController (IMediator _mediator , IOrderRequests orderRequest
     [Authorize(Roles = "Vendedor")]
     
     [HttpPost("EnviarProducto/{idPreparacion}")]
-    public async Task<IActionResult> EnviarProducto(int idPreparacion, [FromBody] SendProductDto sendProductDto )
+    public async Task<IActionResult> EnviarProducto(int idPreparacion, [FromBody] SendProductDto sendProductDto, CancellationToken cancellationToken )
     {
         try
         {
-            var registro = await sendOrder.EnviarProducto(idPreparacion, sendProductDto);
+           
+            var registro =  await _mediator.Send(new SendProductCommand(idPreparacion, sendProductDto) , cancellationToken );
+
             return Ok (  new { IdEnvio = registro } );
             
         }
@@ -161,11 +164,13 @@ public class SellerController (IMediator _mediator , IOrderRequests orderRequest
     [Authorize(Roles = "Vendedor")]
     
     [HttpPost("ConfirmarEnvio/{idenvio}")]
-    public async Task<IActionResult> ConfirmarEnvio(int idenvio )
+    public async Task<IActionResult> ConfirmarEnvio(int idenvio, CancellationToken cancellationToken )
     {
         try
         {
-            var registro = await sendOrder.ConfirmarEnvio(idenvio);
+             
+            var registro = await _mediator.Send(new ConfirmShipmentCommand(idenvio) , cancellationToken );
+            ;
             return Ok ( registro );
             
         }
