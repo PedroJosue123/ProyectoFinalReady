@@ -39,4 +39,14 @@ public class PaymentOrderRepository(TransactivaDbContext context) : IPaymentOrde
             })
             .FirstOrDefaultAsync(cancellationToken);
     }
+    
+    
+    public async Task<Pedido?> GetPedidoDataForPaymentAsync(int idPedido, CancellationToken cancellationToken)
+    {
+        return await context.Pedidos
+            .Include(p => p.IdPedidosProductosNavigation)
+            .ThenInclude(pp => pp.IdPagoNavigation)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.IdPedido == idPedido && p.Estado == true, cancellationToken);
+    }
 }
