@@ -17,4 +17,9 @@
       <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="UseCase\Orders\Seller\Commands\" />
+      <Folder Include="UseCase\Orders\Seller\Queries\" />
+    </ItemGroup>
+
 </Project>
