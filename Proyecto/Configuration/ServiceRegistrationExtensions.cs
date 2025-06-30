@@ -1,9 +1,9 @@
 ﻿using System.Text;
-using Infraestructure.Configuration;
+
 /*
 using Infraestructure.Configuration;
 */
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
  
