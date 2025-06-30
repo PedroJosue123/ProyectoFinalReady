@@ -1,6 +1,9 @@
-﻿namespace Application.Mappers;
+﻿using Domain.Entities;
+using Infraestructure.Models;
 
-ppublic class ProductMapper
+namespace Application.Mappers;
+
+public class ProductMapper
 {
     public static Pedidosproducto ToEntity(ProductOrdenDomain domain) => new Pedidosproducto
         
