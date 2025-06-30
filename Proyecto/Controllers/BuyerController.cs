@@ -4,6 +4,7 @@ using Application.UseCase.Orders.Buyer.Commands;
 using Application.UseCase.Orders.Buyer.Queries;
 using Application.UseCase.PaymenttOrder.Buyer.Commands;
 using Application.UseCase.PaymenttOrder.Buyer.Queries;
+using Application.UseCase.SenddOrder.Buyer.Queries;
 using Domain.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -185,13 +186,14 @@ public class BuyerController (IMediator _mediator, IOrder order, IPaymentOrder p
     
     [Authorize(Roles = "Comprador")]
     [HttpGet("MostarEnvioDePedido/{idPreparacion}")]
-    public async Task<IActionResult> MostrarEnvioPedido(int idPreparacion)
+    public async Task<IActionResult> MostrarEnvioPedido(int idPreparacion , CancellationToken cancellationToken)
     
     {
         try
         {
+           
 
-            var registro = await sendOrder.verEnvio(idPreparacion);
+            var registro = await _mediator.Send(new GetShipmentStatusQuery(idPreparacion) , cancellationToken);
             return Ok (registro );
             
         }
